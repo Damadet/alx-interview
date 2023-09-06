@@ -1,5 +1,6 @@
 #!/usr/bin/node
-const request = require('request');
+import request from 'request';
+
 const API_URL = 'https://swapi-api.hbtn.io/api';
 
 if (process.argv.length > 2) {
@@ -9,7 +10,7 @@ if (process.argv.length > 2) {
     }
     const charactersURL = JSON.parse(body).characters;
     const charactersName = charactersURL.map(
-      url => new Promise((resolve, reject) => {
+      (url) => new Promise((resolve, reject) => {
         request(url, (promiseErr, __, charactersReqBody) => {
           if (promiseErr) {
             reject(promiseErr);
@@ -19,7 +20,7 @@ if (process.argv.length > 2) {
       }));
 
     Promise.all(charactersName)
-      .then(names => console.log(names.join('\n')))
-      .catch(allErr => console.log(allErr));
+      .then((names) => console.log(names.join('\n')))
+      .catch((allErr) => console.log(allErr));
   });
 }
